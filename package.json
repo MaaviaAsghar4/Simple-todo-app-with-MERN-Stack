@@ -4,8 +4,11 @@
   "description": "Simple todo list build with MERN Stack",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix public",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "client": "npm start --prefix public",
+    "server": "concurrently \"npm run dev\" \"npm run client\" "
   },
   "author": "Maavia Asghar",
   "license": "MIT",
