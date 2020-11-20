@@ -29,4 +29,21 @@ router.delete('/:id', (req, res) => {
         .catch(err => res.status(404).json({ success: false }))
 });
 
+//Update Request 
+// router.put('/:id', async (req, res) => {
+//     try {
+//         const todo = await Todo.findOne({ _id: req.params.id })
+
+//         if (req.body.todo) {
+//             post.todo = req.body.todo
+//         }
+
+//         await todo.save()
+//             .then((todo) => res.json(todo))
+//     }
+//     catch (error) {
+//         console.log(error)
+//     }
+// })
+
 module.exports = router

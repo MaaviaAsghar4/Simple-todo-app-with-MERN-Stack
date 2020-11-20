@@ -1,9 +1,14 @@
 import { connect } from 'react-redux'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Allcss.css'
-import { addTodo, deleteTodo, updateTodo,setTodo } from '../Store/action'
+import { addTodo, deleteTodo, updateTodo,setTodo,getTodo } from '../Store/action'
 
-const Todo = ({ todoListItem, addTodo, deleteList, editTodo,setTodo }) => {
+const Todo = ({ todoListItem, addTodo, deleteList, editTodo,setTodo,getTodo }) => {
+
+    useEffect(()=>{
+        getTodo()
+        console.log('hello')
+    },[getTodo])
 
     const [todoItem, setTodoItem] = useState('')
     const [editItem, setEditItem] = useState('')
@@ -16,12 +21,12 @@ const Todo = ({ todoListItem, addTodo, deleteList, editTodo,setTodo }) => {
             <div className='todo-container'>
                 {todoListItem.map((todo, i) => {
                     return (
-                        <div key={todo.id} className='todo-list'>
+                        <div key={todo._id} className='todo-list'>
                             {todo.edit ? <input type='text' value={todo.todoitem} onChange={(e) => setEditItem(e.target.value)} /> : <span>{todo.todo}</span>}
                             <div>
-                                <button className='delete' onClick={() => { deleteList(todo.id) }}>Delete</button>
+                                <button className='delete' onClick={() => { deleteList(todo._id) }}>Delete</button>
                                 {todo.edit ?
-                                    <button className='edit' onClick={() => setTodo(i,editItem)}>Update</button> :
+                                    <button className='edit' onClick={() => {setTodo(i,editItem)}}>Update</button> :
                                     <button className='edit' onClick={() => editTodo(i)}>Edit</button>
                                 }
                             </div>
@@ -42,6 +47,7 @@ const mapDispatchToProps = dispatch => ({
     deleteList: (id) => dispatch(deleteTodo(id)),
     editTodo: (id) => dispatch(updateTodo(id)),
     setTodo: (id,todoValue) => dispatch(setTodo(id,todoValue)),
+    getTodo: () => dispatch(getTodo()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo)

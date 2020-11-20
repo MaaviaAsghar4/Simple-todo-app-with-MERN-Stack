@@ -1,14 +1,16 @@
 const todoList = {
-    todo: [
-        { id: 1, todo: 'Egg', edit: false },
-        { id: 2, todo: 'Milk', edit: false },
-        { id: 3, todo: 'Cream', edit: false },
-    ]
+    todo: []
 }
 
 
 const todos = (state = todoList, action) => {
+    console.log(action.payload)
     switch (action.type) {
+        case 'getTodo':
+            return({
+                ...state,
+                todo: action.payload
+            })
         case "addTodo":
             return ({
                 ...state,
@@ -17,7 +19,7 @@ const todos = (state = todoList, action) => {
         case "deleteTodo":
             return ({
                 ...state,
-                todo: state.todo.filter((todo => todo.id !== action.payload))
+                todo: state.todo.filter((todo => todo._id !== action.payload))
             })
         case "updateTodo": {
             const newTodo = [...state.todo]

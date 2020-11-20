@@ -1,14 +1,53 @@
-const addTodo = (todo) => {
-    const id = Math.floor(Math.random() * 12455)
-    const edit = false
+const getTodo = () => {
     return dispatch => {
-        dispatch({ type: 'addTodo', payload: { id, todo, edit } })
+        const fetchData = async () => {
+            try {
+                const response = await fetch('api/todoitem')
+                let data = await response.json()
+                console.log(data)
+                dispatch({ type: 'getTodo', payload: data })
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData()
+    }
+}
+
+const addTodo = (todo) => {
+    const newTodo = { todo}
+    return dispatch => {
+        const addData = async () => {
+            const response = await fetch('api/todoitem', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newTodo)
+            });
+
+            const fetchedData = await response.json()
+            dispatch({ type: 'addTodo', payload: fetchedData })
+        }
+        addData();
     }
 }
 
 const deleteTodo = (id) => {
     return dispatch => {
-        dispatch({ type: 'deleteTodo', payload: id })
+        const deleteItem = async () => {
+            const fetchTodo = await fetch(`api/todoitem/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+
+            const data = await fetchTodo.json()
+            console.log(data)
+            dispatch({ type: 'deleteTodo', payload: id })
+        }
+        deleteItem()
     }
 }
 
@@ -18,10 +57,9 @@ const updateTodo = (id) => {
     }
 }
 
-const setTodo = (id,todoValue) => {
-    console.log(id)
+const setTodo = (id, todoValue) => {
     return dispatch => {
-        dispatch({ type: 'setTodo',payload: { id, todoValue } })
+        dispatch({ type: 'setTodo', payload: { id, todoValue } })
     }
 }
 
@@ -30,4 +68,5 @@ export {
     deleteTodo,
     updateTodo,
     setTodo,
+    getTodo,
 }
