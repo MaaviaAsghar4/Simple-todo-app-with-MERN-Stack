@@ -26,7 +26,7 @@ const Todo = ({ todoListItem, addTodo, deleteList, editTodo,setTodo,getTodo }) =
                             <div>
                                 <button className='delete' onClick={() => { deleteList(todo._id) }}>Delete</button>
                                 {todo.edit ?
-                                    <button className='edit' onClick={() => {setTodo(i,editItem)}}>Update</button> :
+                                    <button className='edit' onClick={() => {setTodo(i,editItem,todo._id)}}>Update</button> :
                                     <button className='edit' onClick={() => editTodo(i)}>Edit</button>
                                 }
                             </div>
@@ -46,7 +46,7 @@ const mapDispatchToProps = dispatch => ({
     addTodo: (todoItem) => dispatch(addTodo(todoItem)),
     deleteList: (id) => dispatch(deleteTodo(id)),
     editTodo: (id) => dispatch(updateTodo(id)),
-    setTodo: (id,todoValue) => dispatch(setTodo(id,todoValue)),
+    setTodo: (id,todoValue,uri) => dispatch(setTodo(id,todoValue,uri)),
     getTodo: () => dispatch(getTodo()),
 })
 

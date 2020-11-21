@@ -30,20 +30,20 @@ router.delete('/:id', (req, res) => {
 });
 
 //Update Request 
-// router.put('/:id', async (req, res) => {
-//     try {
-//         const todo = await Todo.findOne({ _id: req.params.id })
+router.patch('/:id', async (req, res) => {
+    try {
+        const todo = await Todo.findOne({ _id: req.params.id })
 
-//         if (req.body.todo) {
-//             post.todo = req.body.todo
-//         }
+        if (req.body.todo) {
+            todo.todo = req.body.todo
+        }
 
-//         await todo.save()
-//             .then((todo) => res.json(todo))
-//     }
-//     catch (error) {
-//         console.log(error)
-//     }
-// })
+        const updatedValue = await todo.save()
+        res.json(updatedValue)
+    }
+    catch (error) {
+        console.log(error)
+    }
+})
 
 module.exports = router

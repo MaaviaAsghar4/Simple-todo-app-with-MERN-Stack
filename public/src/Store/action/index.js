@@ -15,7 +15,7 @@ const getTodo = () => {
 }
 
 const addTodo = (todo) => {
-    const newTodo = { todo}
+    const newTodo = { todo }
     return dispatch => {
         const addData = async () => {
             const response = await fetch('api/todoitem', {
@@ -57,8 +57,24 @@ const updateTodo = (id) => {
     }
 }
 
-const setTodo = (id, todoValue) => {
+const setTodo = (id, todoValue, uri) => {
     return dispatch => {
+        const updateItem = async () => {
+            const updateValue = await fetch(`api/todoitem/${uri}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    todo:todoValue
+                })
+            })
+
+            const updatedValue = await updateValue.json()
+            console.log(updatedValue)
+
+        }
+        updateItem()
         dispatch({ type: 'setTodo', payload: { id, todoValue } })
     }
 }
